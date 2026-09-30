@@ -12,8 +12,14 @@ import os
 from dotenv import load_dotenv
 
 # Load .env from the project root regardless of the current working directory.
-_ENV_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".env")
+_ROOT = os.path.dirname(os.path.abspath(__file__))
+_ENV_PATH = os.path.join(_ROOT, ".env")
 load_dotenv(_ENV_PATH)
+
+# Load secrets from .key (kept out of git via .gitignore). Values here override
+# .env so the OpenRouter API key never has to live in the committed .env file.
+_KEY_PATH = os.path.join(_ROOT, ".key")
+load_dotenv(_KEY_PATH, override=True)
 
 
 def _bool(value):
